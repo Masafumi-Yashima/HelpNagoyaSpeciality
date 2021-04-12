@@ -13,6 +13,7 @@
 		B06CC57A261CA0B50059312A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06CC578261CA0B50059312A /* Main.storyboard */; };
 		B06CC57C261CA0B80059312A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B06CC57B261CA0B80059312A /* Assets.xcassets */; };
 		B06CC57F261CA0B80059312A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06CC57D261CA0B80059312A /* LaunchScreen.storyboard */; };
+		B08D1FDF26248FF800D55211 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08D1FDE26248FF800D55211 /* GameScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B06CC57B261CA0B80059312A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B06CC57E261CA0B80059312A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B06CC580261CA0B80059312A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B08D1FDE26248FF800D55211 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				B06CC572261CA0B50059312A /* AppDelegate.swift */,
 				B06CC574261CA0B50059312A /* SceneDelegate.swift */,
 				B06CC576261CA0B50059312A /* ViewController.swift */,
+				B08D1FDE26248FF800D55211 /* GameScene.swift */,
 				B06CC578261CA0B50059312A /* Main.storyboard */,
 				B06CC57B261CA0B80059312A /* Assets.xcassets */,
 				B06CC57D261CA0B80059312A /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			files = (
 				B06CC577261CA0B50059312A /* ViewController.swift in Sources */,
 				B06CC573261CA0B50059312A /* AppDelegate.swift in Sources */,
+				B08D1FDF26248FF800D55211 /* GameScene.swift in Sources */,
 				B06CC575261CA0B50059312A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +293,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4YJ6TUXNQ2;
 				INFOPLIST_FILE = HelpNagoyaSpecialty/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +301,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = masa.yashi.HelpNagoyaSpecialty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -308,6 +313,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4YJ6TUXNQ2;
 				INFOPLIST_FILE = HelpNagoyaSpecialty/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +321,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = masa.yashi.HelpNagoyaSpecialty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
