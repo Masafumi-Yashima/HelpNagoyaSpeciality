@@ -11,6 +11,9 @@ class GameScene: SKScene {
     
     //丼の初期設定
     var bowl:SKSpriteNode?
+    
+    //タイマー
+    var timer:Timer?
 
     //GameSceneが表示された時に呼び出されるメソッド
     override func didMove(to view: SKView) {
@@ -34,18 +37,22 @@ class GameScene: SKScene {
         self.addChild(bowl)
         
         self.fallNagoyaSpecialty()
+        
+        //タイマーを生成
+        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fallNagoyaSpecialty), userInfo: nil, repeats: true)
     }
     
     //名古屋名物を落下させる
-    func fallNagoyaSpecialty() {
-        //imageName="0"の画像を読み込む
-        let texture = SKTexture(imageNamed: "0")
+    @objc func fallNagoyaSpecialty() {
+        let index = Int.random(in: 0...6)
+        //imageName="0...6"の画像を読み込む
+        let texture = SKTexture(imageNamed: "\(index)")
         //.nearestで画像が荒いが処理が早いを設定　<-> .linear(画像が綺麗だが処理が遅い)
         texture.filteringMode = .nearest
         //Textureを指定してスプライトを作成
         let sprite = SKSpriteNode(texture: texture)
         //スプライトのポジションを設定
-        sprite.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        sprite.position = CGPoint(x: self.size.width/2, y: self.size.height)
         sprite.size = CGSize(width: texture.size().width/2, height: texture.size().height/2)
         //テクスチャから物理演算を設定//テクスチャのコンテンツから物理ボディを作成
         sprite.physicsBody = SKPhysicsBody(texture: texture, size: sprite.size)
