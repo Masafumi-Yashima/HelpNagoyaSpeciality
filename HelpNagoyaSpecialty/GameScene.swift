@@ -20,6 +20,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //衝突判定カテゴリー
     let itemCategory:UInt32 = 1<<0
+    
+    //スコア用プロパティ
+    var score = 0
+    var scoreLabel:SKLabelNode?
+    var scoreList = [100,200,300,500,800,1000,1500]
 
     //GameSceneが表示された時に呼び出されるメソッド
     override func didMove(to view: SKView) {
@@ -57,6 +62,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //タイマーを生成
         self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fallNagoyaSpecialty), userInfo: nil, repeats: true)
+        
+        let scoreLabel = SKLabelNode(fontNamed: "Helvetica")
+        scoreLabel.position = CGPoint(x: self.size.width*0.92, y: self.size.height*0.78)
+        scoreLabel.text = "¥0"
+        scoreLabel.fontSize = 32
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.color = UIColor.green
+        self.addChild(scoreLabel)
+        self.scoreLabel = scoreLabel
     }
     
     //名古屋名物を落下させる
@@ -77,6 +91,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //スプライトを追加する
         self.addChild(sprite)
+        
+        self.score += self.scoreList[index]
+        self.scoreLabel?.text = "¥\(self.score)"
     }
     
     //タッチ開始時
@@ -97,4 +114,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node == self.lowestShape || contact.bodyB.node == self.lowestShape {
+            let sprite = SKSpriteNode(imageNamed: "gameover")
+            sprite.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            self.addChild(sprite)
+            self.isPaused = true
+            self.timer?.invalidate()
+        }
+    }
 }
