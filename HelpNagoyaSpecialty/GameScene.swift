@@ -7,24 +7,41 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //丼の初期設定
     var bowl:SKSpriteNode?
     
     //タイマー
     var timer:Timer?
+    
+    //落下判定用シェイプ
+    var lowestShape:SKNode?
+    
+    //衝突判定カテゴリー
+    let itemCategory:UInt32 = 1<<0
 
     //GameSceneが表示された時に呼び出されるメソッド
     override func didMove(to view: SKView) {
         //下方向に重力を追加
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
+        physicsWorld.contactDelegate = self
         
         //背景スプライトの追加
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         background.size = self.size
         self.addChild(background)
+        
+        //落下検知用シェイプノードの追加
+        let lowestShape = SKShapeNode(rectOf: CGSize(width: self.size.width*3, height: 10))
+        lowestShape.position = CGPoint(x: self.size.width/2, y: -10)
+        //シェイプに合わせてPhysicsBodyを生成
+        lowestShape.physicsBody = SKPhysicsBody(rectangleOf: lowestShape.frame.size)
+        lowestShape.physicsBody?.isDynamic = false
+        lowestShape.physicsBody?.contactTestBitMask = self.itemCategory
+        self.addChild(lowestShape)
+        self.lowestShape = lowestShape
         
         //丼を追加
         let bowlTexture = SKTexture(imageNamed: "bowl")
@@ -56,6 +73,7 @@ class GameScene: SKScene {
         sprite.size = CGSize(width: texture.size().width/2, height: texture.size().height/2)
         //テクスチャから物理演算を設定//テクスチャのコンテンツから物理ボディを作成
         sprite.physicsBody = SKPhysicsBody(texture: texture, size: sprite.size)
+        sprite.physicsBody?.categoryBitMask = self.itemCategory
         
         //スプライトを追加する
         self.addChild(sprite)
