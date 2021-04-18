@@ -61,9 +61,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.bowl = bowl
         self.addChild(bowl)
         
-        //タイマーを生成
-        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fallNagoyaSpecialty), userInfo: nil, repeats: true)
-        
         let scoreLabel = SKLabelNode(fontNamed: "Helvetica")
         scoreLabel.position = CGPoint(x: self.size.width*0.92, y: self.size.height*0.78)
         scoreLabel.text = "¥0"
@@ -73,7 +70,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(scoreLabel)
         self.scoreLabel = scoreLabel
         
-        self.fallNagoyaSpecialty()
+        //タイマーを生成
+        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fallNagoyaSpecialty), userInfo: nil, repeats: true)
     }
     
     //名古屋名物を落下させる
