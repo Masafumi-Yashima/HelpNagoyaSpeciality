@@ -28,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     //GameSceneが表示された時に呼び出されるメソッド
     override func didMove(to view: SKView) {
+        //BGMの追加
         let SKBGMAction = SKAction.repeatForever(SKAction.playSoundFileNamed("backmusic.mp3", waitForCompletion: true))
         self.run(SKBGMAction)
         
@@ -115,6 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    //衝突時に呼び出されるメソッド
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node == self.lowestShape || contact.bodyB.node == self.lowestShape {
             let sprite = SKSpriteNode(imageNamed: "gameover")
