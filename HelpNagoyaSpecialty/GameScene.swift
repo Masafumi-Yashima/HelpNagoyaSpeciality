@@ -28,6 +28,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     //GameSceneが表示された時に呼び出されるメソッド
     override func didMove(to view: SKView) {
+        let SKBGMAction = SKAction.repeatForever(SKAction.playSoundFileNamed("backmusic.mp3", waitForCompletion: true))
+        self.run(SKBGMAction)
+        
         //下方向に重力を追加
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
         physicsWorld.contactDelegate = self
@@ -58,8 +61,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.bowl = bowl
         self.addChild(bowl)
         
-        self.fallNagoyaSpecialty()
-        
         //タイマーを生成
         self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fallNagoyaSpecialty), userInfo: nil, repeats: true)
         
@@ -71,6 +72,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.color = UIColor.green
         self.addChild(scoreLabel)
         self.scoreLabel = scoreLabel
+        
+        self.fallNagoyaSpecialty()
     }
     
     //名古屋名物を落下させる
