@@ -18,6 +18,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //落下判定用シェイプ
     var lowestShape:SKNode?
     
+    //名古屋名物表示用Node
+    var itemNode:SKNode!
+    
     //衝突判定カテゴリー
     let itemCategory:UInt32 = 1<<0
     
@@ -52,6 +55,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(lowestShape)
         self.lowestShape = lowestShape
         
+        //名古屋名物表示用のスプライトを生成
+        itemNode = SKNode()
+        self.addChild(itemNode)
+        
         //丼を追加
         let bowlTexture = SKTexture(imageNamed: "bowl")
         let bowl = SKSpriteNode(texture: bowlTexture)
@@ -60,7 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bowl.physicsBody = SKPhysicsBody(texture: bowlTexture, size: bowl.size)
         bowl.physicsBody?.isDynamic = false
         self.bowl = bowl
-        self.addChild(bowl)
+        itemNode.addChild(bowl)
         
         let scoreLabel = SKLabelNode(fontNamed: "Helvetica")
         scoreLabel.position = CGPoint(x: self.size.width*0.92, y: self.size.height*0.78)
@@ -92,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sprite.physicsBody?.categoryBitMask = self.itemCategory
         
         //スプライトを追加する
-        self.addChild(sprite)
+        itemNode.addChild(sprite)
         
         self.score += self.scoreList[index]
         self.scoreLabel?.text = "¥\(self.score)"
@@ -100,10 +107,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //タッチ開始時
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            let location = touch.location(in: self)
-            let action = SKAction.move(to: CGPoint(x: location.x, y: 100), duration: 0.2)
-            self.bowl?.run(action)
+        if self.timer != nil {
+            if let touch = touches.first {
+                let location = touch.location(in: self)
+                let action = SKAction.move(to: CGPoint(x: location.x, y: 100), duration: 0.2)
+                self.bowl?.run(action)
+            }
+        } else {
+            restart()
         }
     }
     
@@ -121,9 +132,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node == self.lowestShape || contact.bodyB.node == self.lowestShape {
             let sprite = SKSpriteNode(imageNamed: "gameover")
             sprite.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-            self.addChild(sprite)
-            self.isPaused = true
+            itemNode.addChild(sprite)
             self.timer?.invalidate()
+            self.timer = nil
         }
+    }
+    
+    //リスタート
+    func restart() {
+        self.score = 0
+        self.scoreLabel?.text = "¥\(self.score)"
+        itemNode.removeAllChildren()
+        self.bowl?.position = CGPoint(x: self.size.width/2, y: 100)
+        itemNode.addChild(self.bowl!)
+        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fallNagoyaSpecialty), userInfo: nil, repeats: true)
     }
 }
